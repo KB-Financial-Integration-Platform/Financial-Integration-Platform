@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from django.contrib.auth import authenticate, login
 from web.forms import UserForm
+
+from .real_estate.test import logic_layer
 # from .models import Myuser
 
 from django.contrib.auth.hashers import make_password, check_password #비밀번호 암호화 / 패스워드 체크(db에있는거와 일치성확인)
@@ -41,7 +43,11 @@ def my(request):
 def 주거(request):
     return render(request,'../templates/부동산_맞춤주거지역.html')
 def 실거래가(request):
-    return render(request,'../templates/부동산_실거래가조회.html')
+    if request.method == 'POST':
+        x = [4.744323,28,2.772589,2001,16,195,3.653252,2025,6,0.0,24,0.0]
+    else:
+        x = [4.744323,28,2.772589,2001,16,195,3.653252,2025,6,0.0,24,0.0]
+    return render(request=request, template_name='../templates/부동산_실거래가조회.html', context={"SJ": logic_layer(x)})
 def 부동산(request):
     return render(request,'../templates/부동산.html')
 def 설명회(request):
