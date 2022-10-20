@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+
 <style>
   #apart {
     top : -1200px
-  }
+  }  
 </style>
 {% load static %}
 <html style="font-size: 16px;" lang="en"><head>
@@ -22,9 +23,9 @@
     
     
     <script type="application/ld+json">{
-		"@context": "http://schema.org",
-		"@type": "Organization",
-		"name": ""
+      "@context": "http://schema.org",
+      "@type": "Organization",
+      "name": ""
 }</script>
     <meta name="theme-color" content="#59bec1">
     <meta property="og:title" content="부동산_맞춤 주거지역">
@@ -41,12 +42,12 @@
             <ul class="u-nav u-spacing-20 u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1" href="{% url 'home' %}" style="padding: 10px;">Home</a>
             </li><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1" href="{% url '부동산' %}" style="padding: 10px;">부동산</a>
             </li><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1" href="{% url '주식' %}" style="padding: 10px;">주식</a>
-            </li><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1" href="{% url '적금카드' %}" style="padding: 10px;">적금/카드</a>
-            </li><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1" href="{% url '설명회' %}" style="padding: 10px;">설명회정보</a>
               {% if user.is_authenticated %}
-            </li><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1" href="{% url 'my' %}" style="padding: 10px;">마이페이지</a>
-          {%else%}
-          {%endif%}{% if user.is_authenticated %}
+            </li><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1" href="{% url '적금카드' %}" style="padding: 10px;">적금/카드</a>
+            </li><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1" href="{% url '소비' %}" style="padding: 10px;">나의소비성향</a>
+            {%else%}
+            {%endif%}
+            </li><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1" href="{% url '설명회' %}" style="padding: 10px;">설명회정보</a>{% if user.is_authenticated %}
             </li><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1"  href="{% url 'logout' %}" style="padding: 10px;">로그아웃</a>
             {% else %}
             </li><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1" href="{% url 'login' %}" style="padding: 10px;">로그인</a>
@@ -62,7 +63,7 @@
                 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url '주식' %}">주식</a>
                 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url '적금카드' %}">적금/카드</a>
                 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url '설명회' %}">설명회정보</a>
-                </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'my' %}">마이페이지</a>
+                </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url '소비' %}">나의소비성향</a>
                 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'login' %}">로그인</a>
                 </li></ul>
               </div>
@@ -71,132 +72,207 @@
           </div>
         </nav>
       </div></header>
-    <section class="u-clearfix u-section-1" id="sec-27ec">
+
+    <section class="u-clearfix u-section-1" id="sec-27ec" style="height:1500px">
       <div class="u-clearfix u-sheet u-sheet-1">
-        <h3 class="u-custom-font u-text u-text-default u-text-1"> 부동산 재테크</h3>
-        <br><br>
-        
-        
-        <!-- 지도1 반포자이-->
-        <div style="padding:100px 0 0 100px;">
-        
-        <div id="map2" style="width:350px;height:350px;"></div>
-        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9d946098d691c8ee8ae47ace57a12273"></script>
-        <script>
+        <h3 class="u-custom-font u-text u-text-default u-text-1"> 부동산 재테크</h3><br><br>
+        <h3 class="u-custom-font u-text u-text-default u-text-2">나에게 알맞는 아파트</h3>
+        <br>
+        <!-- 지도1 -->
+        <div style="padding:50px 0 0 150px;">
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=942c1099b5a044b78b48641ed686369c&libraries=services"></script>
+        <div id="map2" style="width:350px;height:300px; float:left;"></div> 
+        <img src="{% static '/images/11.png'%}" alt="" style="float:left; margin-left:60px;margin-top:80px;">     
+              <script>
+                const infowindow1 = new kakao.maps.InfoWindow({zIndex:2});
 
-          var mapContainer = document.getElementById('map2'), // 지도를 표시할 div 
-              mapOption = { 
-                  center: new kakao.maps.LatLng(37.5078, 127.0146), // 지도의 중심좌표
-                  level: 3 // 지도의 확대 레벨
-              };
-          
-          var map2 = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-          // 지도를 클릭한 위치에 표출할 마커입니다
-          var marker = new kakao.maps.Marker({ 
-              // 지도 중심좌표에 마커를 생성합니다 
-              position: map2.getCenter() 
-            }); 
-          // 지도에 마커를 표시합니다
-          marker.setMap(map2);
+                const mapContainer1 = document.getElementById('map2'), // 지도를 표시할 div 
+                    mapOption1 = { 
+                        center: new kakao.maps.LatLng(37.531595, 127.006985), // 지도의 중심좌표
+                        level: 2 // 지도의 확대 레벨
+                    };
 
-          // 지도에 클릭 이벤트를 등록합니다
-          // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
-          kakao.maps.event.addListener(map2, 'click', function(mouseEvent) {        
-    
-              // 클릭한 위도, 경도 정보를 가져옵니다 
-              var latlng = mouseEvent.latLng; 
-    
-              // 마커 위치를 클릭한 위치로 옮깁니다
-              marker.setPosition(latlng);
-    
-              var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-              message += '경도는 ' + latlng.getLng() + ' 입니다';
-    
-              var resultDiv = document.getElementById('clickLatlng'); 
-              resultDiv.innerHTML = message;
-    
-            });
-          </script>
+                const map1 = new kakao.maps.Map(mapContainer1, mapOption1); // 지도를 생성합니다
+                const ps1 = new kakao.maps.services.Places();
+
+                            // 키워드로 장소를 검색합니다
+                ps1.keywordSearch('{{best_1.동}} {{best_1.단지명}}', placesSearchCB1); 
+
+
+                // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+                function placesSearchCB1 (data, pagination) {
+
+                        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+                        // LatLngBounds 객체에 좌표를 추가합니다
+                        const bounds1 = new kakao.maps.LatLngBounds();
+                        
+                        displayMarker1(data[0]);    
+                        bounds1.extend(new kakao.maps.LatLng(data[0].y, data[0].x));
+
+                        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+                        map1.setBounds(bounds1);
+
+                }
+
+                // 지도에 마커를 표시하는 함수입니다
+
+                function displayMarker1(place) {
+                    // 마커를 생성하고 지도에 표시합니다
+                    const marker1 = new kakao.maps.Marker({
+                        map: map1,
+                        position: new kakao.maps.LatLng(place.y , place.x) 
+                    });
+                    marker1.setMap(map1);
+                  }
+                  
+
+                </script>
+                <div style="margin-left:500px;">
+           
+                <div style='top:40px'>
+                <section style="left:-30px;">                              
+                 <div style="display:inline-block;vertical-align:top;">
+                  
+                  <h3 style='font-size: 30px; margin-left: 150px;' class="u-custom-font u-text u-text-default u-text-1">{{best_1.단지명}}</h3> 
+                  </div>
+                  <div style=" color:#8F7E6D;">
+                  <p style="font-size:26px;margin-left: 130px;">평 : {{best_1.평}}평 <br>  층 : {{best_1.층}}층 <br>주소 : 서울시 {{best_1.구}} {{best_1.동}} <br>거래금액 : {{best_1.억}}억 {{best_1.거래금액}}만원</p>
                   <br>
-                <!-- 지도2 잠실 현대아파트--> 
-                <div id="map3" style="width:350px;height:350px;"></div>
-                <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9d946098d691c8ee8ae47ace57a12273"></script>
+                  </div>
+                </section></div></div>
+                <br><br>
+
+
+                <!-- 지도2 --> 
+                <div id="map3" style="width:350px;height:300px; float:left;"></div>
+                <img src="{% static '/images/22.png'%}" alt="" style="float:left; margin-left:60px;margin-top:80px;">  
                 <script>
-        
-                  var mapContainer = document.getElementById('map3'), // 지도를 표시할 div 
-                      mapOption = { 
-                          center: new kakao.maps.LatLng(37.5041, 127.0854), // 지도의 중심좌표
-                          level: 3 // 지도의 확대 레벨
-                      };
-                  
-                  var map3 = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-                  // 지도를 클릭한 위치에 표출할 마커입니다
-                  var marker = new kakao.maps.Marker({ 
-                      // 지도 중심좌표에 마커를 생성합니다 
-                      position: map3.getCenter() 
-                    }); 
-                  // 지도에 마커를 표시합니다
-                  marker.setMap(map3);
-        
-                  // 지도에 클릭 이벤트를 등록합니다
-                  // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
-                  kakao.maps.event.addListener(map3, 'click', function(mouseEvent) {        
-            
-                      // 클릭한 위도, 경도 정보를 가져옵니다 
-                      var latlng = mouseEvent.latLng; 
-            
-                      // 마커 위치를 클릭한 위치로 옮깁니다
-                      marker.setPosition(latlng);
-            
-                      var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-                      message += '경도는 ' + latlng.getLng() + ' 입니다';
-            
-                      var resultDiv = document.getElementById('clickLatlng'); 
-                      resultDiv.innerHTML = message;
-            
+                const infowindow2 = new kakao.maps.InfoWindow({zIndex:3});
+
+                const mapContainer2 = document.getElementById('map3'), // 지도를 표시할 div 
+                    mapOption2 = { 
+                        center: new kakao.maps.LatLng(37.531595, 127.006985), // 지도의 중심좌표
+                        level: 2 // 지도의 확대 레벨
+                    };
+
+                const map2 = new kakao.maps.Map(mapContainer2, mapOption2); // 지도를 생성합니다
+                const ps2 = new kakao.maps.services.Places();
+
+                            // 키워드로 장소를 검색합니다
+                ps2.keywordSearch('{{best_2.동}} {{best_2.단지명}}', placesSearchCB2); 
+
+                // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+                function placesSearchCB2 (data, pagination) {
+
+
+                        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+                        // LatLngBounds 객체에 좌표를 추가합니다
+                        const bounds2 = new kakao.maps.LatLngBounds();
+                        
+                        displayMarker2(data[0]);    
+                        bounds2.extend(new kakao.maps.LatLng(data[0].y, data[0].x));
+
+                        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+                        map2.setBounds(bounds2);
+                }
+
+                // 지도에 마커를 표시하는 함수입니다
+                function displayMarker2(place) {
+                    
+                    // 마커를 생성하고 지도에 표시합니다
+                    const marker2 = new kakao.maps.Marker({
+                        map: map2,
+                        position: new kakao.maps.LatLng(place.y, place.x) 
                     });
-                  </script>
-                <br>
-                <!-- 지도3 용산 시티파크-->
-                <div id="map4" style="width:350px;height:350px;"></div>
-                <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9d946098d691c8ee8ae47ace57a12273"></script>
+                    marker2.setMap(map2);
+                  }
+
+                // 마커가 지도 위에 표시되도록 설정합니다
+                
+                
+                </script>
+                
+                <div style="margin-left:500px;">    
+                  <div>
+                  <section style="left:-30px">                              
+                   <div style="display:inline-block;vertical-align:top;">
+                    
+                    <h3 style='font-size: 30px;  margin-left: 150px;' class="u-custom-font u-text u-text-default u-text-1">{{best_2.단지명}}</h3> 
+                    </div>
+                    <div style=" color:#8F7E6D; ">
+                    <p style="font-size:26px;margin-left: 130px;">평 : {{best_2.평}}평<br> 층 : {{best_2.층}}층  <br> 주소 : 서울시 {{best_2.구}} {{best_2.동}} <br>거래금액 : {{best_2.억}}억 {{best_2.거래금액}}만원</p>
+                    <br><br><br>
+                    </div>
+                  </section>
+               </div></div>
+                  
+
+
+                <!-- 지도3 -->
+                <div id="map4" style="width:350px;height:300px; float:left;"></div>
+                <img src="{% static '/images/33.png'%}" alt="" style="float:left; margin-left:60px;margin-top:80px;">  
                 <script>
-        
-                  var mapContainer = document.getElementById('map4'), // 지도를 표시할 div 
-                      mapOption = { 
-                          center: new kakao.maps.LatLng(37.5255, 126.9689), // 지도의 중심좌표
-                          level: 3 // 지도의 확대 레벨
-                      };
-                  
-                  var map4 = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-                  // 지도를 클릭한 위치에 표출할 마커입니다
-                  var marker = new kakao.maps.Marker({ 
-                      // 지도 중심좌표에 마커를 생성합니다 
-                      position: map4.getCenter() 
-                    }); 
-                  // 지도에 마커를 표시합니다
-                  marker.setMap(map4);
-        
-                  // 지도에 클릭 이벤트를 등록합니다
-                  // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
-                  kakao.maps.event.addListener(map4, 'click', function(mouseEvent) {        
-            
-                      // 클릭한 위도, 경도 정보를 가져옵니다 
-                      var latlng = mouseEvent.latLng; 
-            
-                      // 마커 위치를 클릭한 위치로 옮깁니다
-                      marker.setPosition(latlng);
-            
-                      var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-                      message += '경도는 ' + latlng.getLng() + ' 입니다';
-            
-                      var resultDiv = document.getElementById('clickLatlng'); 
-                      resultDiv.innerHTML = message;
-            
+                const infowindow3 = new kakao.maps.InfoWindow({zIndex:4});
+
+                const mapContainer3 = document.getElementById('map4'), // 지도를 표시할 div 
+                    mapOption3 = { 
+                        center: new kakao.maps.LatLng(37.531595, 127.006985), // 지도의 중심좌표
+                        level: 2 // 지도의 확대 레벨
+                    };
+
+                const map3 = new kakao.maps.Map(mapContainer3, mapOption3); // 지도를 생성합니다
+                const ps3 = new kakao.maps.services.Places();
+
+                            // 키워드로 장소를 검색합니다
+                ps3.keywordSearch('{{best_3.단지명}}', placesSearchCB3); 
+
+                // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+                function placesSearchCB3 (data, pagination) {
+                
+
+                        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+                        // LatLngBounds 객체에 좌표를 추가합니다
+                        const bounds3 = new kakao.maps.LatLngBounds();
+                        
+                        displayMarker3(data[0]);    
+                        bounds3.extend(new kakao.maps.LatLng(data[0].y, data[0].x));
+
+                        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+                        map3.setBounds(bounds3);
+                }
+
+                // 지도에 마커를 표시하는 함수입니다
+                function displayMarker3(place) {
+                    
+                    // 마커를 생성하고 지도에 표시합니다
+                    const marker3 = new kakao.maps.Marker({
+                        map: map3,
+                        position: new kakao.maps.LatLng(place.y, place.x) 
                     });
-        </script></div>
-        <div id='apart'>
-          <h3 class="u-custom-font u-text u-text-default u-text-2">나에게 알맞는 아파트</h3></div>
+                    marker3.setMap(map3);
+                  }
+
+                // 마커가 지도 위에 표시되도록 설정합니다
+                
+                </script>
+                
+                <div style="margin-left:500px;">
+           
+                  <div style='top:40px'>
+                  <section style="left:-30px">                              
+                   <div style="display:inline-block;vertical-align:top;">
+                    
+                    <h3 style='font-size: 30px;  margin-left: 150px;' class="u-custom-font u-text u-text-default u-text-1">{{best_3.단지명}}</h3> 
+                    </div>
+                    <div style=" color:#8F7E6D;  ">
+                    <p style="font-size:26px;margin-left: 130px;">평 : {{best_3.평}}평 <br> 층 : {{best_3.층}}층 <br>주소 : 서울시 {{best_3.구}} {{best_3.동}} <br> 거래금액 : {{best_3.억}}억 {{best_3.거래금액}}만원</p>
+                    <br>
+                    </div>
+                  </section>
+               </div></div>
+                  
+              <br><br><br>
+        
         <div id="back">
         <a href="{% url '부동산' %}" class="u-btn u-btn-round u-button-style u-radius-17 u-btn-1">뒤로가기</a>
       </div></div>

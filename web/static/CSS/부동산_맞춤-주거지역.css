@@ -28,7 +28,7 @@
 
 @media (max-width: 575px) {
   .u-section-1 .u-sheet-1 {
-    height: 1000px;
+    height: 1500px;
   }
   .u-section-1 .u-btn-1 {
     top: 500px;
@@ -37,8 +37,8 @@
     margin-right: 86px;
   }
 }@font-face {
-  font-family: 'ONEMobileTitle';
+  font-family: 'ONEMobileRegular';
   font-style: normal;
   font-weight: 400;
-  src: url(fonts/ONEMobileTitle.ttf);
+  src: url(fonts/ONEMobileRegular.ttf);
 }

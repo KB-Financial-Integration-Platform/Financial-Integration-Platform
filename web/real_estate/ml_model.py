@@ -18,7 +18,8 @@ from sklearn.metrics import mean_squared_error
 import xgboost as xgb
 import lightgbm as lgb
 import joblib
-apt_price = pd.read_csv('web\아파트_전처리.csv',encoding='utf8')
+apt_price = pd.read_csv('../real_estate/아파트_전처리_단지명포함.csv',encoding='utf8')
+print(apt_price)
 X = apt_price.drop(columns='거래금액(만원)')
 y = apt_price['거래금액(만원)']
 X_train,X_test,y_train,y_test = train_test_split(X, y, test_size=0.3)

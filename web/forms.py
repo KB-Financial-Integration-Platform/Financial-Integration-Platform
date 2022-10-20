@@ -9,5 +9,5 @@ class UserForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ("username","age","child","Marriage","work","work_address","hope_address","password1", "password2", "email")
+        fields = ("username","age","child","Marriage","work","work_address","hope_address","available_asset","password1", "password2", "email")
 
