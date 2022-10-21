@@ -18,6 +18,7 @@ from django.views.decorators.csrf import csrf_exempt
 아파트_종류 = pd.read_csv('web/real_estate/아파트_종류_단지명포함.csv',encoding='utf8')
 아파트 = pd.read_csv('web/real_estate/아파트_전처리_단지명포함.csv',encoding='utf8')
 아파트25 = pd.read_csv('web/real_estate/아파트_2025_단지명포함.csv',encoding='cp949')
+아파트_최종 = pd.read_csv('web/real_estate/아파트_전처리_단지명포함_최종.csv',encoding='utf8')
 
 
 def index(request):
@@ -89,15 +90,16 @@ def 실거래가(request):
 
     if request.method == 'POST':
         apt = request.POST['keyword']
-        apt_list = 아파트[아파트['단지명']==str(apt)][-10:]
-        apt_list = apt_list.rename(columns={'거래금액(만원)':'거래금액'})
+        cond = 아파트_최종['단지명'].str.contains(apt)
+        apt_list = 아파트_최종[cond][-10:].rename(columns={'거래금액(만원)':'거래금액'})
 
-        apt25 = 아파트25[아파트25['단지명']==str(apt)]['0'].mean().astype('int')
+        apt25 = int(아파트25[아파트25['단지명']==str(apt)]['0'].mean())
         apt25억 = apt25// 10000
         apt25가격 = apt25 % 10000
+
+        apt_list_html = apt_list.to_html(index=False, col_space=[100,100,100,50,50,100,100,50,80,100])
         
-        
-        return render(request, '../templates/부동산_실거래가조회.html', {"apt":apt,"apt_list": apt_list, "apt25억":apt25억,"apt25가격":apt25가격})
+        return render(request, '../templates/부동산_실거래가조회.html', {"apt":apt,"apt_list": apt_list_html, "apt25억":apt25억,"apt25가격":apt25가격})
     else:
         return render(request, '../templates/부동산_실거래가조회.html')
 
