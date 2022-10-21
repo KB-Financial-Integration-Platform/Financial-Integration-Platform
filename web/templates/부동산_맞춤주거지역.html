@@ -224,7 +224,7 @@
                 const ps3 = new kakao.maps.services.Places();
 
                             // 키워드로 장소를 검색합니다
-                ps3.keywordSearch('{{best_3.단지명}}', placesSearchCB3); 
+                ps3.keywordSearch('{{best_3.동}} {{best_3.단지명}}', placesSearchCB3); 
 
                 // 키워드 검색 완료 시 호출되는 콜백함수 입니다
                 function placesSearchCB3 (data, pagination) {
