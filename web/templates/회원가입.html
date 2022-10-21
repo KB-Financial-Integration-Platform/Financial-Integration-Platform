@@ -36,12 +36,13 @@
             <ul class="u-nav u-spacing-20 u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1" href="{% url 'home' %}" style="padding: 10px;">Home</a>
             </li><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1" href="{% url '부동산' %}" style="padding: 10px;">부동산</a>
             </li><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1" href="{% url '주식' %}" style="padding: 10px;">주식</a>
+              {% if user.is_authenticated %}
             </li><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1" href="{% url '적금카드' %}" style="padding: 10px;">적금/카드</a>
+            </li><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1" href="{% url '소비' %}" style="padding: 10px;">나의소비성향</a>
+            {%else%}
+            {%endif%}
             </li><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1" href="{% url '설명회' %}" style="padding: 10px;">설명회정보</a>
               {% if user.is_authenticated %}
-            </li><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1" href="{% url 'my' %}" style="padding: 10px;">마이페이지</a>
-          {%else%}
-          {%endif%} {% if user.is_authenticated %}
             </li><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1"  href="{% url 'logout' %}" style="padding: 10px;">로그아웃</a>
             {% else %}
             </li><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1" href="{% url 'login' %}" style="padding: 10px;">로그인</a>
@@ -57,7 +58,7 @@
                 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url '주식' %}">주식</a>
                 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url '적금카드' %}">적금/카드</a>
                 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url '설명회' %}">설명회정보</a>
-                </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'my' %}">마이페이지</a>
+                </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url '소비' %}">나의소비성향</a>
                 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'login' %}">로그인</a>
                 </li></ul>
               </div>
@@ -141,7 +142,11 @@
                         <option value="있음">있음</option>
                         <option value="없음">없음</option>
                       </select>
-                     
+                      <div class="mb-3">
+                        <label for="available_asset">가용자산 (만원)</label>
+                        <input type="text" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" name="available_asset" id="available_asset"
+                               value="{{ form.email.value|default_if_none:'' }}">
+                    </div>
                     </div>
                     <div class="u-form-group u-form-group-7">
                       <label for="text-ead7" class="u-label">직장지역</label>

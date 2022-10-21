@@ -8,11 +8,18 @@ from django.contrib import auth
 from django.contrib.auth import authenticate, login
 from web.forms import UserForm
 
-from .real_estate.test import logic_layer
-# from .models import Myuser
+import numpy as np
+import pandas as pd
+import math
 
-from django.contrib.auth.hashers import make_password, check_password #비밀번호 암호화 / 패스워드 체크(db에있는거와 일치성확인)
-# Create your views here.
+
+from django.views.decorators.csrf import csrf_exempt
+
+아파트_종류 = pd.read_csv('web/real_estate/아파트_종류_단지명포함.csv',encoding='utf8')
+아파트 = pd.read_csv('web/real_estate/아파트_전처리_단지명포함.csv',encoding='utf8')
+아파트25 = pd.read_csv('web/real_estate/아파트_2025_단지명포함.csv',encoding='cp949')
+아파트_최종 = pd.read_csv('web/real_estate/아파트_전처리_단지명포함_최종.csv',encoding='utf8')
+
 
 def index(request):
     return render(request,'../templates/index.html')
@@ -28,26 +35,75 @@ def 소비(request):
     my_info = Consume.objects.filter(username=user_id)
     return render(request,'../templates/마이_개인소비성향.html', {'my_info':my_info})
 
-def 자산(request):
-    return render(request,'../templates/마이_개인자산상태.html')
-
 def 적금카드(request):
     user_age = request.user.age
     save_info = Saving.objects.filter(age=user_age)
     card_info = Card.objects.filter(age=user_age)
     return render(request,'../templates/적금카드.html', {'save_info':save_info, 'card_info':card_info})
 
-def my(request):
-    return render(request,'../templates/마이페이지.html')
-
 def 주거(request):
-    return render(request,'../templates/부동산_맞춤주거지역.html')
-def 실거래가(request):
+    hope_address_s = request.user.hope_address.split(" ")
+
+    #가용자산범위 안에 있는 아파트 추출
+    best_process_1 = 아파트_종류[아파트_종류["거래금액(만원)"] <= int(request.user.available_asset)]
+
+    #가용자산범위 안의 희망 동 추출
+    best_process_2 = best_process_1[best_process_1["동"] == hope_address_s[2]]
+    best_process_2 = best_process_2.rename(columns={'거래금액(만원)':'거래금액'})
+    best_process_2 = best_process_2.groupby("단지명").mean().reset_index()
+    
+    best_process_2['구'] = hope_address_s[1]
+    best_process_2['동'] = hope_address_s[2]
+    best_process_2['거래금액'] = best_process_2['거래금액'].astype('int')
+    best_process_2['억'] = best_process_2['거래금액'] // 10000
+    best_process_2['거래금액'] = best_process_2['거래금액'] % 10000
+    best_process_2['층'] = best_process_2['층'].astype('int')
+    best_process_2['평'] = best_process_2['평'].astype('int')
+
+    if best_process_2.empty :
+        best_1 = '이 가격으로는 집을 구매하실수 없습니다'
+        best_2 = '이 가격으로는 집을 구매하실수 없습니다'
+        best_3 = '이 가격으로는 집을 구매하실수 없습니다'
+    elif request.user.child == '있음':
+        best_process_2 = best_process_2.sort_values("평", ascending=False)
+        best_1 = best_process_2.iloc[0]
+        best_2 = best_process_2.iloc[1]
+        best_3 = best_process_2.iloc[2]
+    else :
+        #제일 싼집 순으로
+        best_process_2 = best_process_2.sort_values("거래금액")
+        best_1 = best_process_2.iloc[0]
+        best_2 = best_process_2.iloc[1]
+        best_3 = best_process_2.iloc[2]
+
+    return render(request,'../templates/부동산_맞춤주거지역.html', {'best_1':best_1, 'best_2':best_2, 'best_3':best_3})
+
+def ranges_0(list):
+    return range(0, len(list)-1)
+    
+def pick_data_1(list, i, j):
+    return list[i+1][j]
+
+# csrf token을 확인하지 않는 장식자
+@csrf_exempt
+def 실거래가(request):    
+
     if request.method == 'POST':
-        x = [4.744323,28,2.772589,2001,16,195,3.653252,2025,6,0.0,24,0.0]
+        apt = request.POST['keyword']
+        cond = 아파트_최종['단지명'].str.contains(apt)
+        apt_list = 아파트_최종[cond][-10:].rename(columns={'거래금액(만원)':'거래금액'})
+
+        apt25 = int(아파트25[아파트25['단지명']==str(apt)]['0'].mean())
+        apt25억 = apt25// 10000
+        apt25가격 = apt25 % 10000
+
+        apt_list_html = apt_list.to_html(index=False, col_space=[100,100,100,50,50,100,100,50,80,100])
+        
+        return render(request, '../templates/부동산_실거래가조회.html', {"apt":apt,"apt_list": apt_list_html, "apt25억":apt25억,"apt25가격":apt25가격})
     else:
-        x = [4.744323,28,2.772589,2001,16,195,3.653252,2025,6,0.0,24,0.0]
-    return render(request=request, template_name='../templates/부동산_실거래가조회.html', context={"SJ": logic_layer(x)})
+        return render(request, '../templates/부동산_실거래가조회.html')
+
+
 def 부동산(request):
     return render(request,'../templates/부동산.html')
 def 설명회(request):
@@ -56,8 +112,8 @@ def 주식(request):
     return render(request,'../templates/주식.html')
 
 
-
 # 로그인
+@csrf_exempt
 def login(request):
     # login으로 POST 요청이 들어왔을 때, 로그인 절차를 밟는다.
     if request.method == 'POST':
@@ -97,10 +153,6 @@ def 회원가입(request):
         form = UserForm(request.POST)
         if form.is_valid():
             form.save()
-            # username = form.cleaned_data.get('username')
-            # raw_password = form.cleaned_data.get('password1')
-            # user = authenticate(username=username, password=raw_password)  # 사용자 인증
-            # login(request, user)  # 로그인
             return redirect('login')
     else:
         form = UserForm()

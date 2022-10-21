@@ -33,21 +33,19 @@
         <nav class="u-align-right u-menu u-menu-one-level u-offcanvas u-menu-1" data-responsive-from="MD">
           <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px; font-weight: 700;">
             <a class="u-button-style u-custom-active-border-color u-custom-active-color u-custom-border u-custom-border-color u-custom-borders u-custom-hover-border-color u-custom-hover-color u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-text-active-color u-custom-text-color u-custom-text-hover-color u-custom-top-bottom-menu-spacing u-nav-link" href="#" style="padding: 4px 0px; font-size: calc(1em + 8px);">
-              <svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 302 302" style="undefined"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-a760"></use></svg>
-              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="svg-a760" x="0px" y="0px" viewBox="0 0 302 302" style="enable-background:new 0 0 302 302;" xml:space="preserve" class="u-svg-content"><g><rect y="36" width="302" height="30"></rect><rect y="236" width="302" height="30"></rect><rect y="136" width="302" height="30"></rect>
-</g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>
             </a>
           </div>
           <div class="u-custom-menu u-nav-container">
             <ul class="u-nav u-spacing-20 u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1" href="{% url 'home' %}" style="padding: 10px;">Home</a>
             </li><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1" href="{% url '부동산' %}" style="padding: 10px;">부동산</a>
             </li><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1" href="{% url '주식' %}" style="padding: 10px;">주식</a>
+              {% if user.is_authenticated %}
             </li><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1" href="{% url '적금카드' %}" style="padding: 10px;">적금/카드</a>
+            </li><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1" href="{% url '소비' %}" style="padding: 10px;">나의소비성향</a>
+            {%else%}
+            {%endif%}
             </li><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1" href="{% url '설명회' %}" style="padding: 10px;">설명회정보</a>
               {% if user.is_authenticated %}
-            </li><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1" href="{% url 'my' %}" style="padding: 10px;">마이페이지</a>
-          {%else%}
-          {%endif%}{% if user.is_authenticated %}
             </li><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1"  href="{% url 'logout' %}" style="padding: 10px;">로그아웃</a>
             {% else %}
             </li><li class="u-nav-item"><a class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-custom-color-1 u-text-grey-90 u-text-hover-custom-color-1" href="{% url 'login' %}" style="padding: 10px;">로그인</a>
@@ -63,7 +61,7 @@
                 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url '주식' %}">주식</a>
                 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url '적금카드' %}">적금/카드</a>
                 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url '설명회' %}">설명회정보</a>
-                </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'my' %}">마이페이지</a>
+                </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url '소비' %}">나의소비성향</a>
                 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'login' %}">로그인</a>
                 </li></ul>
               </div>
@@ -76,14 +74,120 @@
       <div class="u-clearfix u-sheet u-sheet-1">
         <h3 class="u-custom-font u-text u-text-default u-text-1">나만의 적금/카드 상품 확인</h3>
 
-        {% for info in save_info %}
-              <h1>{{info.period}}</h1> 
-              </br>
-        {% endfor %}
-        {% for info in card_info %}
-              <h1>{{info.period}}</h1> 
-              </br>
-        {% endfor %}
+        <br><br>
+        <div class="u-clearfix u-gutter-0 u-layout-wrap u-layout-wrap-1">
+          <div class="u-gutter-0 u-layout">
+            <div class="u-layout-row">
+              <div style="left:50px" class="u-container-style u-layout-cell u-left-cell u-size-23 u-layout-cell-1">
+                <div class="u-container-layout u-container-layout-1">  
+                  <p class="u-custom-font u-text u-text-default u-text-1">적금 추천</p>
+                  <br><br><br>
+                  <img class="u-image u-image-1" src="{% static '/images/bankbook (4).png'%}" data-image-width="356" data-image-height="356" style="margin-left:50px;">
+                  <br><br><br><br><br><br><br>
+                  <p class="u-custom-font u-text u-text-default u-text-1">카드 추천</p>
+                  <br><br><br>
+                  <img class="u-image u-image-1" src="{% static '/images/nori.png'%}" data-image-width="360" data-image-height="360" style="margin-left:50px;">
+              </div>
+              <div style="right:-250px" class="u-align-left u-container-style u-layout-cell u-right-cell u-size-37 u-layout-cell-2">
+                  <div style="width:500px; height: 1200px;" class="u-container-layout u-container-layout-2">
+                    <!-- <p class="u-custom-font u-text u-text-default u-text-1">카드 추천</p> -->
+                    <div>
+                        {% for info in save_info %}
+                        <section>
+                        <!-- <div style="border: 1px solid #444444; width: 400px;"> -->
+                            <h3 style='top:20px; font-size: 30px;margin-left: 70px;' class="u-custom-font u-text u-text-default u-text-1">{{info.saving_name}}</h3> 
+                            <br>
+                            <div style='top:30px'>
+                            <section style="left:-50px">                              
+                             <div style="display:inline-block;vertical-align:top;">
+                              <img src="{% static '/images/calendar.png'%}" alt="img"/>
+                              </div>
+                              <div style="display:inline-block; color:#8F7E6D; font-family: 'ONEMobileTitle'; ">
+                              <p style="font-size:25px">
+                                &nbsp;기간 : {{info.period}}
+                              </p>
+                              <br>
+                              </div>
+                            </section>
+                            <section style="left:-50px">
+                            <div style="display:inline-block;vertical-align:top;">
+                                <img src="{% static '/images/banknotes.png'%}" alt="img"/>
+                                </div>
+                                <div style="display:inline-block;color:#8F7E6D; font-family: 'ONEMobileTitle';">
+                                <p style="font-size:25px">
+                                  &nbsp;가격 : {{info.price}}
+                                </p>
+                                <br>
+                              </div>
+                            </section>
+                            <section style="left:-50px">
+                              <div style="display:inline-block;vertical-align:top;">
+                                  <img src="{% static '/images/rate.png'%}" alt="img"/>
+                                  </div>
+                                  <div style="display:inline-block;color:#8F7E6D; font-family: 'ONEMobileTitle';">
+                                  <p style="font-size:25px">
+                                    &nbsp;이율 : {{info.interest_rate}}
+                                  </p><br>
+                              </div>
+                              
+                              <div style="left:60px">
+                                <!-- u-btn u-btn-round u-button-style u-radius-17 u-btn-1 -->
+                    <a style="font-size: 18px; margin-left: 60px;"class="u-btn u-btn-round u-button-style u-radius-17" href="https://obank.kbstar.com/quics?page=C016613&cc=b061496:b061645&isNew=N&prcode=DP01000228" target="_blank">자세히 살펴보기</a>
+                    </div>
+                            </section></section>
+                            </div>
+                            <br><br><br>
+                        {% endfor %}
+                        {% for info in card_info %}
+                        <section>
+                        <h3 style='top:20px; left:10px; font-size: 30px;margin-left: 70px;' class="u-custom-font u-text u-text-default u-text-1">{{info.card_name}}</h3> 
+                        <br>
+                        <div style='top:40px'>
+                        <section style="left:-50px">                              
+                         <div style="display:inline-block;vertical-align:top;">
+                          <img src="{% static '/images/benefit1.png'%}" alt="img">
+                          </div>
+                          <div style="display:inline-block; color:#8F7E6D; font-family: 'ONEMobileTitle';">
+                            <p style="font-size:25px">&nbsp;{{info.benefit1}}</p>
+                          <br>
+                          </div>
+                        </section>
+                        <section style="left:-50px">
+                        <div style="display:inline-block;vertical-align:top;">
+                            <img src="{% static '/images/benefit2.png'%}" alt="img"/>
+                            </div>
+                            <div style="display:inline-block;color:#8F7E6D; font-family: 'ONEMobileTitle';">
+                              <p style="font-size:25px">&nbsp;{{info.benefit2}}</p>
+                            <br>
+                          </div>
+                        </section>
+                        <section style="left:-50px">
+                          <div style="display:inline-block;vertical-align:top;">
+                              <img src="{% static '/images/benefit3.png'%}" alt="img"/>
+                              </div>
+                              <div style="display:inline-block;color:#8F7E6D; font-family: 'ONEMobileTitle';">
+                                <p style="font-size:25px">
+                                  &nbsp;{{info.benefit3}}</p><br>
+                          </div>
+                          <div style="left:60px">
+                            
+                    <a style="font-size: 18px;margin-left: 60px;" class="u-btn u-btn-round u-button-style u-radius-17" href="https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=01664" target="_blank">자세히 살펴보기</a>
+                 </div> </section>
+                        </div>
+                        </br></section>
+                        {% endfor %}
+                        <!-- {% for info in card_info %}
+                            <p>{{info.period}}</p> 
+                           </br>
+                        {% endfor %} -->
+                      </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       </div>
     </section>
     
